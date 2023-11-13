@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- <meta http-equiv="content-security-policy" content="default-src 'none'; script-src 'self';connect-src 'self'; img-src 'self';style-src 'self' 'sha256-CwE3Bg0VYQOIdNAkbB/Btdkhul49qZuwgNCMPgNY5zw=';" /> -->
+
+	<title>预览图片</title>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		body {
+			--bg-color: #eee;
+			background-image:
+				linear-gradient(45deg, var(--bg-color) 25%, transparent 0, transparent 75%, var(--bg-color) 0),
+				linear-gradient(45deg, var(--bg-color) 25%, transparent 0, transparent 75%, var(--bg-color) 0);
+			background-position: 0 0, 10px 10px;
+			background-size: 20px 20px;
+		}
+
+		.viewer-close {
+			display: none;
+		}
+
+		.viewer-title {
+			/* text-shadow: 0 0 4px rgba(104, 104, 104, 0.3); */
+			background-color: rgba(0, 0, 0, 50%);
+			padding: 4px 8px;
+			border-radius: 2px;
+			color: #fff;
+		}
+
+		#galley {
+			display: none;
+		}
+	</style>
+
+	<!-- <link href="https://fengyuanchen.github.io/viewerjs/css/viewer.css" rel="stylesheet"> -->
+	<!-- <script src="https://fengyuanchen.github.io/viewerjs/js/viewer.js"></script> -->
+	<link rel="icon" href="./favicon.ico" />
+	<link href="viewer.css" rel="stylesheet">
+	<script src="viewer.js"></script>
+
+</head>
+
+<body>
+	<div id="galley">
+		<ul id="pictures" class="pictures"></ul>
+	</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+{
+	"name": "draw",
+	"version": "0.0.1",
+	"license": "",
+	"scripts": {
+		"serve": "vite --host",
+		"build": "vite build",
+		"build:ts": "vue-tsc --noEmit --allowUnreachableCode && vite build",
+		"deploy": "node ./script/deploy.js",
+		"postinstall": "node postinstall.js",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@iconfu/svg-inject": "^1.2.3",
+		"@simonwep/pickr": "1.8.2",
+		"@types/node": "^18.11.18",
+		"@types/three": "^0.150.3",
+		"axios": "^0.25.0",
+		"draco3d": "1.5.6",
+		"fflate": "0.7.4",
+		"infinite-viewer": "^0.20.0",
+		"occt-import-js": "0.0.18",
+		"rhino3dm": "8.0.0",
+		"three": "0.151.3",
+		"vue": "^3.2.25",
+		"vuex": "^4.0.2",
+		"web-ifc": "0.0.39"
+	},
+	"devDependencies": {
+		"@vitejs/plugin-vue": "^4.0.0",
+		"@vue/compiler-sfc": "^3.0.5",
+		"ftp-deploy": "^2.4.2",
+		"less": "^4.1.2",
+		"less-loader": "^7.3.0",
+		"prettier": "2.8.7",
+		"rollup-plugin-commonjs": "^10.1.0",
+		"typescript": "^4.4.4",
+		"vite": "^4.0.4",
+		"vue-tsc": "^0.29.8"
+	}
+}

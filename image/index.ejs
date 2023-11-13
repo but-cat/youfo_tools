@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>预览图片</title>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		body {
+			--bg-color: #eee;
+			background-image:
+				linear-gradient(45deg, var(--bg-color) 25%, transparent 0, transparent 75%, var(--bg-color) 0),
+				linear-gradient(45deg, var(--bg-color) 25%, transparent 0, transparent 75%, var(--bg-color) 0);
+			background-position: 0 0, 10px 10px;
+			background-size: 20px 20px;
+		}
+
+		.viewer-close {
+			display: none;
+		}
+
+		.viewer-title {
+			/* text-shadow: 0 0 4px rgba(104, 104, 104, 0.3); */
+			background-color: rgba(0, 0, 0, 50%);
+			padding: 4px 8px;
+			border-radius: 2px;
+			color: #fff;
+		}
+
+		#galley {
+			display: none;
+		}
+	</style>
+
+	<!-- <link href="https://fengyuanchen.github.io/viewerjs/css/viewer.css" rel="stylesheet"> -->
+	<!-- <script src="https://fengyuanchen.github.io/viewerjs/js/viewer.js"></script> -->
+	<link rel="icon" href="./favicon.ico" />
+	<link href="viewer.css" rel="stylesheet">
+	<script src="viewer.js"></script>
+
+</head>
+
+<body>
+	<div id="galley">
+		<ul id="pictures" class="pictures"></ul>
+	</div>
+
+
+	<script>
+		var viewer;
+		const fs = require('fs');
+		const path = require('path');
+		const upath = require('upath');
+		const targetpath = path.join('<%= target %>'.replace(/(\w+):\/+/, ''));
+		const pathparse = path.parse(targetpath);
+		const resourcePath = path.parse((pathparse.root ? '' : '/') + targetpath).dir;
+		// const resourcePath = targetpath.replace(/\/[^\/]+$/, "/");
+		const scheme = '<%= target %>';
+		const regexp = /[^\d]+|\d+/g;
+
+		
+
+		// var image = new Image();
+		// image.src = '<%= target %>';
+
+		console.log('targetpath', targetpath);
+
+		
+
+		window.addEventListener('DOMContentLoaded', function () {
+
+			if (/file:\//.test('<%= target %>')) fs.readdir(resourcePath, (err, origin) => {
+				console.log(err, origin);
+				if (err) return;
+
+				const pictures = document.querySelector('#pictures');
+				const galley = document.querySelector('#galley');
+				const imgList = origin.filter(item => item.at(0) !== '.' && ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'svg', 'ico', 'tiff', 'jfif'].includes(item.replace(/.+\./, "")))
+					.map(name => ({ name, weights: name.match(regexp) }))
+					.sort((a, b) => {
+						let pos = 0;
+						const weightsA = a.weights;
+						const weightsB = b.weights;
+						let weightA = weightsA[pos];
+						let weightB = weightsB[pos];
+						while (weightA && weightB) {
+							const v = weightA - weightB;
+							if (!isNaN(v) && v !== 0) return v;
+							if (weightA !== weightB) return weightA > weightB ? 1 : -1;
+							pos += 1;
+							weightA = weightsA[pos];
+							weightB = weightsB[pos];
+						}
+						return weightA ? 1 : -1;
+					})
+					.map(i=>i.name);
+				const index = imgList.findIndex(item => item === pathparse.base);
+
+				imgList.forEach(item => {
+					const img = new Image();
+					const li = document.createElement('li');
+					img.src = 'file://' + upath.normalize(path.join(resourcePath, item));
+					li.appendChild(img);
+					pictures.appendChild(li);
+				});
+
+				viewer = new Viewer(galley, {
+					hidden() {
+						viewer.destroy();
+					},
+					transition: false,
+					backdrop: false,
+					tooltip: false,
+					interval: Infinity,
+				});
+
+				
+
+
+
+				// image.click();
+				viewer.view(index);
+				viewer.show();
+			})
+			else {
+				const image = new Image();
+				image.src = '<%= target %>';
+
+				viewer = new Viewer(image, {
+					hidden() {
+						viewer.destroy();
+					},
+					toolbar: {
+						zoomIn: 4,
+						zoomOut: 4,
+						oneToOne: 4,
+						rotateLeft: 4,
+						play: {
+							show: 4,
+							size: 'large',
+						},
+						rotateRight: 4,
+						reset: 4,
+						flipHorizontal: 4,
+						flipVertical: 4,
+						download() {
+							const a = document.createElement('a');
+
+							a.href = viewer.image.src;
+							a.download = viewer.image.alt;
+							document.body.appendChild(a);
+							a.click();
+							document.body.removeChild(a);
+						},
+					},
+					backdrop: false,
+					tooltip: false,
+					interval: Infinity,
+				});
+				viewer.show();
+				document.title = '<%= target %>';
+			}
+
+
+		});
+	</script>
+</body>
+
+</html>

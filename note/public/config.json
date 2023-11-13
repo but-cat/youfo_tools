@@ -1,0 +1,15 @@
+{
+	"name": "markdown",
+	"path": "markdown.explore/",
+	"type": "explore",
+	"version": "1.0.0",
+	"description": "Markdown",
+	"main": "index.ejs",
+	"extension": [
+		"markdown",
+		"md"
+	],
+	"dependencies": {
+		"ejs": "^2.5.7"
+	}
+}

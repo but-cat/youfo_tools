@@ -1,0 +1,9 @@
+{
+	"printWidth": 1000, 
+   "eslintIntegration": false,
+   "singleAttributePerLine": false,
+   "singleQuote": true,
+   "semi": true,
+   "useTabs": true
+   
+}

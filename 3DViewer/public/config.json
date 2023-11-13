@@ -1,0 +1,33 @@
+{
+	"name": "preview3d",
+	"path": "preview3d.tools/",
+	"type": "tools",
+	"version": "1.0.0",
+	"description": "Preview3D",
+	"main": "index.html",
+	"extension": [],
+
+
+	"explore": {
+		"path": "preview3d.explore/",
+		"main": "index.html",
+		"icon": "favicon.ico",
+		"extension": [
+			"fbx",
+			"obj",
+			"stl",
+			"dae",
+			"3ds",
+			"ply",
+			"glb",
+			"gltf"
+		]
+	},
+
+	"tools": {
+		"path": "preview3d.tools/",
+		"main": "index.html",
+		"icon": "favicon.ico",
+		"extension": []
+	}
+}

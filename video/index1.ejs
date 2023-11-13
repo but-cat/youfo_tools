@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>
+		<%= name %>
+	</title>
+	<link href="video-js-cdn.css" rel="stylesheet">
+	<script src="video.core.js"></script>
+
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+
+		video, video-js {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<!-- <video-js>
+		<source src="<%= target %>" type="<%= mime %>">
+	</video-js> -->
+
+	<video>
+		<source src="<%= target %>" type="<%= mime %>">
+	</video>
+</body>
+
+</html>

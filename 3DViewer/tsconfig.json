@@ -1,0 +1,54 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "esnext",
+		"strict": true,
+		"jsx": "preserve",
+
+		"importHelpers": true,
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"sourceMap": true,
+		"baseUrl": ".",
+		
+		// "allowJs": true,
+		// "resolveJsonModule": true,
+		"lib": [
+			"esnext",
+			"dom"
+		],
+		"types": [
+			"vite/client",
+			"element-plus/global"
+		],
+		"noImplicitAny": false,
+		
+		"paths": {
+			"@/*": [
+				"src/*"
+			],
+			"@root/*": [
+				"./*"
+			],
+			"@opal/*": [
+				"opal/*"
+			]
+		}
+	},
+	// "include": [
+	// 	"src/**/*.ts",
+	// 	"src/**/*.d.ts",
+	// 	"src/**/*.tsx",
+	// 	"src/**/*.vue",
+
+	// 	"src/typings/*.d.ts"
+	// ],
+	"exclude": [
+		"node_modules",
+		"dist",
+		"**/*.js"
+	]
+}

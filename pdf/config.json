@@ -1,0 +1,14 @@
+{
+	"name": "pdf",
+	"path": "pdf.explore/",
+	"type": "explore",
+	"version": "1.0.0",
+	"description": "Pdf",
+	"main": "index.ejs",
+	"extension": [
+		"pdf"
+	],
+	"dependencies": {
+		"ejs": "^2.5.7"
+	}
+}

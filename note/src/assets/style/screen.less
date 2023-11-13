@@ -1,0 +1,44 @@
+//== Media queries breakpoints媒体查询断点
+//
+//## 定义布局将更改的断点，以适应不同的屏幕大小.
+
+@screen-xs:                 480px;												// Xsmall 适用于超小屏幕/电话。
+@screen-sm:                 768px;												// Small 适用于纵向模式的小型和大型平板电脑以及某些台式机显示器。
+@screen-md:                 992px;												// Medium 适用于横向和台式显示器中的小型和大型平板电脑。
+@screen-lg:                 1200px;												// Large 适用于大型台式机显示器。
+@screen-xl:					1920px;												// Xlarge 适用于大型台式机显示器或并排屏幕。
+
+
+// 媒体查询在需要提供最大值时不会重叠
+@screen-xs-max:				(@screen-sm - 1);
+@screen-sm-max:				(@screen-md - 1);
+@screen-md-max:				(@screen-lg - 1);
+@screen-lg-max:				(@screen-xl - 1);
+
+//== 容器尺寸
+@grid-gutter-width:         30px;
+//## 为不同的屏幕尺寸定义".container"类的最大宽度。
+
+//** 对于`@screen-sm-min`及以上.
+@container-sm:				(720px + @grid-gutter-width);
+
+//** 对于`@screen-md-min`及以上.
+@container-md:				(940px + @grid-gutter-width);
+
+//** 对于`@screen-lg-min`及以上.
+@container-lg:				(1140px + @grid-gutter-width);
+
+
+
+
+//-- Z-index 配置列表
+@zindex:					1000;												// 初始位置
+@zindex-navbar:				@zindex + 10;										// 导航栏
+@zindex-dropdown:			@zindex + 10;										// dropdown??
+@zindex-navbar-fixed:		@zindex + 30;										// 固定定位的导航栏
+
+@zindex-modal-background:	@zindex + 40;										// 模态窗背景层
+@zindex-modal:				@zindex + 45;										// 模态窗容器层
+
+@zindex-popover:			@zindex + 60;										// 弹出框
+@zindex-tooltip:			@zindex + 70;										// 工具提示

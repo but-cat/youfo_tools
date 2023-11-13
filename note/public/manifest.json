@@ -1,0 +1,26 @@
+{
+	"name": "markdown",
+	"description": "预览，编辑markdown文件",
+	"version": "1.0.0",
+
+	"icon": "favicon.ico",
+	
+	"main": "index.html",
+	"extension": [],
+
+	"explore": {
+		"path": "scene.explore/",
+		"main": "index.html",
+		"icon": "favicon.ico",
+		"extension": []
+	},
+
+	"tools": {
+		"path": "scene.tools/",
+		"main": "index.html",
+		"icon": "favicon.ico",
+		"extension": [
+			"sc"
+		]
+	}
+}

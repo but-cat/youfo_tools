@@ -1,0 +1,22 @@
+{
+	"name": "image",																		// Name of the image
+	"path": "image.explore/",																// this is the path to the image folder
+	"type": "explore",																		// explore, search, or browse
+	"version": "1.0.0",																		// version of the image
+	"description": "Image",
+	"main": "index.ejs",
+	"extension": [
+		"jpg",
+		"jpeg",
+		"png",
+		"gif",
+		"bmp",
+		"webp",
+		"svg",
+		"ico",
+		"tiff"
+	],
+	"dependencies": {
+		"ejs": "^2.5.7"
+	}
+}
