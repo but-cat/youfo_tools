@@ -5,44 +5,51 @@
 
 <script setup lang="ts">
 import { defineComponent, reactive, ref, computed, getCurrentInstance, onMounted, onBeforeUnmount, toRefs } from 'vue';
-import { useStore } from 'vuex';
+// import { useStore } from 'vuex';
 import monokai from "monaco-themes/themes/Monokai.json";															// https://editor.bitwiser.in/
 import blackboard from "monaco-themes/themes/Blackboard.json";
+import zh_CN from 'monaco-editor-nls/locale/zh-hans';
 // import active4d from 'monaco-themes/themes/Active4D.json';
 import active4d from './Active4D.json';
 import * as monaco from "monaco-editor";
 import "./xml";
 // const store = useStore();
 
+
+const internalInstance = getCurrentInstance(); // 有效  全局
+const globalProperties = internalInstance?.appContext.config.globalProperties;
+const $xhr = globalProperties!.$xhr;
+
+
 const codeContent = ref(null as unknown as HTMLDivElement);
-let editor: any = null;
+const editor: any = ref(null);
 const code = ref("");
 // const code = computed(() => store.state.code.xmlString);
 
 // const theme = ref("vs-dark");
 
-function initEditor() {
+function initEditor(language = 'text') {
 	console.log(codeContent.value);
 	
 	// 初始化编辑器，确保dom已经渲染
 	monaco.editor.defineTheme('monokai', monokai as any);
 	monaco.editor.defineTheme('blackboard', blackboard as any);
 	monaco.editor.defineTheme('active4d', active4d as any);
-	editor = monaco.editor.create(codeContent.value, {
+	editor.value = monaco.editor.create(codeContent.value, {
 		value: code.value, //编辑器初始显示代码
-		language: "xml", //语言支持自行查阅demo
+		language, //语言支持自行查阅demo
 		automaticLayout: true, //自动布局
 		theme: document.body.classList.contains("dark") ? "blackboard" : "active4d", //官方自带三种主题vs, hc-black, or vs-dark
 
 		model: (window as any).model ? (window as any).model : undefined,
-		viewState: (window as any).viewState ? (window as any).viewState : undefined,
+		// viewState: (window as any).viewState ? (window as any).viewState : undefined,
 	});
-	editor.onKeyUp(() => {
-		// 当键盘按下，判断当前编辑器文本与已保存的编辑器文本是否一致
-		const value = editor.getValue();
-		// store.commit('code/setCodeString', value);
-		code.value = value;
-	});
+	// editor.onKeyUp(() => {
+	// 	// 当键盘按下，判断当前编辑器文本与已保存的编辑器文本是否一致
+	// 	const value = editor.getValue();
+	// 	// store.commit('code/setCodeString', value);
+	// 	code.value = value;
+	// });
 
 
 	// store.commit('code/setMonacoEditor', editor);
@@ -55,33 +62,57 @@ function initEditor() {
 }
 
 function getValue() {
-	editor.getValue(); //获取编辑器中的文本
+	editor.value.getValue(); //获取编辑器中的文本
 }
-function setValue(data: string) {
-	editor.setValue(data); // 设置编辑器中的文本
-}
-
-function getAssets(url: string = "") {
-	if(!url) return;
-	function reqListener() {
-		console.log(this.responseText);
-		setValue(this.responseText);
-	}
-
-	var oReq = new XMLHttpRequest();
-	oReq.addEventListener("load", reqListener);
-	oReq.open("GET", url);
-	oReq.send();
+function setValue(data: string = '') {
+	console.log(data);
+	
+	editor.value.setValue(data); // 设置编辑器中的文本
 }
 
-onMounted(() => {
-	initEditor();
+// function getAssets(url: string = "") {
+// 	if(!url) return;
+// 	function reqListener() {
+// 		console.log(this.responseText);
+// 		setValue(this.responseText as string);
+// 	}
+
+// 	var oReq = new XMLHttpRequest();
+// 	oReq.addEventListener("load", reqListener);
+// 	oReq.open("GET", url);
+// 	oReq.send();
+// }
+
+onMounted(async () => {
+
+
+	
+
+	const extension = window?.BASE_URL?.replace(/.+\./,"") || "text";
+
+
+	console.log(extension, window.BASE_URL);
+	
+
+
+	initEditor(extension);
+
+
+	// setTimeout(async () => {
+	// 	// if(window.BASE_URL) (async () => {
+	// 	const code = await $xhr(window.BASE_URL);
+	// 	setValue(code.value);
+	// // })();
+	// }, 5000)
+
+
+	
 	// console.log('onMounted', toRefs(store.state.code.MonacoModel));
 
 
-	console.log(location.hash);
-	const path = location.hash.replace(/\#/, '');
-	if(path) getAssets(window.BASE_URL);
+	// console.log(location.hash);
+	// const path = location.hash.replace(/\#/, '');
+	// if(path) getAssets(window.BASE_URL);
 
 
 	

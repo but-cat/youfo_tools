@@ -19,6 +19,7 @@
 		"@types/qs": "^6.9.7",
 		"less": "^4.1.2",
 		"monaco-editor": "^0.44.0",
+		"monaco-editor-nls": "^3.1.0",
 		"monaco-themes": "^0.4.4",
 		"path-browserify": "^1.0.1",
 		"upath": "^2.0.1",

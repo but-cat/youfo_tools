@@ -12,18 +12,13 @@ function $xhr(url: string, options: any = {}) {
 		try {
 			const oReq = new XMLHttpRequest();
 			oReq.addEventListener("load", function reqListener() {
-				if (this.status == 200) {
-					console.log("reqListener: ", JSON.parse(this.responseText));
-					resolve(JSON.parse(this.responseText));
-				} else {
-					if(this.responseText) resolve(JSON.parse(this.responseText));
-				}
+				if (this.status == 200) resolve(this.responseText);
 			});
 			oReq.open("GET", url);
-			oReq.onerror = reject;
+			oReq.onerror = err => reject(err);
 			oReq.send();
-		} catch (error) {
-			reject(error)
+		} catch (error: any) {
+			reject(error.message)
 		}
 	});
 };
@@ -34,11 +29,23 @@ const app = createApp(App);
 app.config.globalProperties.$xhr = $xhr;
 (window as any).$xhr = $xhr;
 
-setTimeout(() => {
+
+
+function setThemeClassWithSystem() {
 	if (window.matchMedia("(prefers-color-scheme: dark)").matches) 
 		document.body.classList.add("dark");//深色主题
 	else document.body.classList.remove("dark");//浅色主题
+}
+
+setTimeout(() => {
+	setThemeClassWithSystem();
+	
+	window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', () => {
+		setThemeClassWithSystem();
+	});
 }, 100);
+
+
 
 // app.config.globalProperties.$http = request;
 app.mount('#app');

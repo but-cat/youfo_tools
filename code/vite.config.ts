@@ -48,6 +48,18 @@ export default defineConfig({
 	},
 
 
+	build: {
+		// outDir: "dist",
+		outDir: "../../youfo_test/.youfo/tools/code/",
+		target: 'esnext',
+		// rollupOptions: {
+		// 	input: {
+		// 		default: './index.html',
+		// 	},
+		// },
+	},
+
+
 	css: {
 		// css预处理器
 		preprocessorOptions: {

@@ -8,13 +8,10 @@
 
 <script setup lang="ts">
 import { defineComponent, reactive, ref, getCurrentInstance, onMounted } from 'vue';
-import Nodelist from './Nodelist/index.vue';
 // import Filelist from '@/browser/view/Filelist/index.vue';
 import monaco from './monaco/index.vue';
+// import monaco from './editor/index.vue';
 
-// "create-file"
-onMounted(() => {
-});
 </script>
 
 <style lang="less" scoped>
