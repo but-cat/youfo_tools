@@ -3,13 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, reactive, ref, shallowReadonly, computed, getCurrentInstance, onMounted, onBeforeUnmount, toRefs } from 'vue';
+import { defineComponent, reactive, ref, shallowReadonly, computed, watch, getCurrentInstance, onMounted, onBeforeUnmount, toRefs } from 'vue';
 // import { useStore } from 'vuex';
 import monokai from 'monaco-themes/themes/Monokai.json'; // https://editor.bitwiser.in/
 import blackboard from 'monaco-themes/themes/Blackboard.json';
 import zh_CN from 'monaco-editor-nls/locale/zh-hans';
 // import active4d from 'monaco-themes/themes/Active4D.json';
-import { language } from "./language";
+import { language } from './language';
 
 import active4d from './Active4D.json';
 import * as monaco from 'monaco-editor';
@@ -23,15 +23,22 @@ const $xhr = globalProperties!.$xhr;
 const codeContent = ref(null as unknown as HTMLDivElement);
 // const editor: any = shallowReadonly(null as unknown as monaco.editor.IStandaloneCodeEditor);
 let editor = null as unknown as monaco.editor.IStandaloneCodeEditor;
-const code = ref('');
+// const code = ref('');
 // const code = computed(() => store.state.code.xmlString);
 
 // const theme = ref("vs-dark");
 
+const props = defineProps(['modelValue']);
+const emit = defineEmits(['update:modelValue']);
 
-
-
-
+const code = computed({
+	get() {
+		return props.modelValue;
+	},
+	set(value) {
+		emit('update:modelValue', value);
+	},
+});
 
 function initEditor(extension = 'text') {
 	// console.log(codeContent.value, language);
@@ -58,12 +65,12 @@ function initEditor(extension = 'text') {
 		model: (window as any).model ? (window as any).model : undefined,
 		// viewState: (window as any).viewState ? (window as any).viewState : undefined,
 	});
-	// editor.onKeyUp(() => {
-	// 	// 当键盘按下，判断当前编辑器文本与已保存的编辑器文本是否一致
-	// 	const value = editor.getValue();
-	// 	// store.commit('code/setCodeString', value);
-	// 	code.value = value;
-	// });
+	editor.onKeyUp(() => {
+		// 当键盘按下，判断当前编辑器文本与已保存的编辑器文本是否一致
+		const value = editor.getValue();
+		// store.commit('code/setCodeString', value);
+		code.value = value;
+	});
 
 	// store.commit('code/setMonacoEditor', editor);
 
@@ -74,29 +81,16 @@ function initEditor(extension = 'text') {
 	// if((window as any).model) editor.setModel((window as any).model);
 }
 
-function getValue() {
-	editor.getValue(); //获取编辑器中的文本
-}
-function setValue(data: string = '') {
-	console.log(data, editor.setValue);
 
-	editor.setValue(data); // 设置编辑器中的文本
 
-	// editor.setValue(data);
-}
 
-// function getAssets(url: string = "") {
-// 	if(!url) return;
-// 	function reqListener() {
-// 		console.log(this.responseText);
-// 		setValue(this.responseText as string);
-// 	}
+watch(code, (value) => {
+	console.log(value);
 
-// 	var oReq = new XMLHttpRequest();
-// 	oReq.addEventListener("load", reqListener);
-// 	oReq.open("GET", url);
-// 	oReq.send();
-// }
+	if(editor.getValue() == value) return;
+	editor.setValue(value);
+}, { immediate: true });
+
 
 onMounted(async () => {
 	const extension = window?.BASE_URL?.replace(/.+\./, '') || 'text';
@@ -107,12 +101,12 @@ onMounted(async () => {
 	//192.168.0.100:3600/
 
 	// setTimeout(async () => {
-	if(window.BASE_URL) (async () => {
-		const code = await $xhr(window.BASE_URL);
-		if(code) setValue(code);
-	})();
+	// if (window.BASE_URL)
+	// 	(async () => {
+	// 		const code = await $xhr(window.BASE_URL);
+	// 		if (code) setValue(code);
+	// 	})();
 	// }, 5000)
-
 
 	(window as any).editor = editor;
 

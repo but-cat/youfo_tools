@@ -1,0 +1,31 @@
+{
+	"name": "excalidraw",
+	"description": "虚拟手绘风格的白板",
+	"type": "tools",
+	"version": "1.0.0",
+
+	"icon": "favicon.ico",
+	
+	"main": "index.html",
+	"extension": [],
+	"dependencies": {
+		"ejs": "^2.5.7"
+	},
+
+
+	"explore": {
+		"path": "excalidraw.explore/",
+		"main": "index.html",
+		"icon": "favicon.ico",
+		"extension": []
+	},
+
+	"tools": {
+		"path": "excalidraw.tools/",
+		"main": "index.html",
+		"icon": "favicon.ico",
+		"extension": [
+			"sc"
+		]
+	}
+}
