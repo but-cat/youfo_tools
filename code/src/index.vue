@@ -4,8 +4,8 @@
 		<!-- <Filelist/> -->
 		<monaco v-model="code" />
 
-		<button @click="saveFile" class="w-6 h-6 absolute bottom-8 right-8 z-10 rounded-full bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 flex overflow-hidden text-sm">
-			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+		<button @click="saveFile" class="p-4 absolute bottom-8 right-8 z-10 rounded-full bg-gray-100 dark:bg-gray-900 dark:text-white text-gray-600 active:bg-gray-200 active:dark:bg-gray-800 flex overflow-hidden text-sm">
+			<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
 				<path fill="#6E6E6E" fill-rule="evenodd" d="M4,2 L18.4222294,2 L22,5.67676491 L22,20 C22,21.1045695 21.1045695,22 20,22 L4,22 C2.8954305,22 2,21.1045695 2,20 L2,4 C2,2.8954305 2.8954305,2 4,2 Z M17,4 L17,10 L7,10 L7,4 L4,4 L4,20 L6,20 L6,12 L18,12 L18,20 L20,20 L20,6.48925072 L17.5777706,4 L17,4 Z M9,4 L9,8 L15,8 L15,4 L9,4 Z M8,14 L8,20 L16,20 L16,14 L8,14 Z M12,5 L14,5 L14,7 L12,7 L12,5 Z" />
 			</svg>
 		</button>
@@ -24,26 +24,44 @@ const $xhr = globalProperties!.$xhr;
 
 const code = ref('');
 
-function saveFile() {
+// function saveFile() {
+// 	const stringData = code.value;
+// 	const blob = new Blob([stringData], {
+// 		type: 'text/plain;charset=utf-8',
+// 	});
+// 	const objectURL = URL.createObjectURL(blob);
+// 	const aTag = document.createElement('a');
+// 	aTag.href = objectURL;
+// 	aTag.download = '文本文件.txt';
+// 	aTag.click();
+// 	URL.revokeObjectURL(objectURL);
+// }
+
+async function saveFile() {
 	const stringData = code.value;
-	const blob = new Blob([stringData], {
-		type: 'text/plain;charset=utf-8',
+	const base_url = window.BASE_URL;
+	const res = await fetch(base_url, {
+		method: 'PUT',
+		body: stringData,
+		headers: {
+			"Content-Type": "application/octet-stream",
+		},
 	});
-	const objectURL = URL.createObjectURL(blob);
-	const aTag = document.createElement('a');
-	aTag.href = objectURL;
-	aTag.download = '文本文件.txt';
-	aTag.click();
-	URL.revokeObjectURL(objectURL);
 }
 
 onMounted(async () => {
 	if (!window.BASE_URL) return;
 	
-	
 	const data = await $xhr(window.BASE_URL);
 	console.log('BASE_URL', data);
 	if (data) code.value = data;
+
+	window.addEventListener('keydown', (e) => {
+		if (e.ctrlKey && e.key === 's') {
+			e.preventDefault();
+			saveFile();
+		}
+	});
 });
 </script>
 

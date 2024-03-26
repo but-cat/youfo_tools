@@ -49,8 +49,8 @@ export default defineConfig({
 
 
 	build: {
-		// outDir: "dist",
-		outDir: "../../youfo_test/.youfo/tools/code/",
+		outDir: "dist",
+		// outDir: "../../youfo_test/.youfo/tools/code/",
 		target: 'esnext',
 		// rollupOptions: {
 		// 	input: {
