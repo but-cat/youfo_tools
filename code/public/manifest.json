@@ -7,7 +7,7 @@
 	"icon": "favicon.ico",
 	
 	"main": "index.html",
-	"extension": [],
+	"extension": ["*"],
 	"dependencies": {
 		"ejs": "^2.5.7"
 	},
